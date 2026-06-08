@@ -1,16 +1,54 @@
-# React + Vite
+# OneHealth Doctor Portal
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React doctor portal connected to a FastAPI and PostgreSQL backend.
 
-Currently, two official plugins are available:
+## Project structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- `frontend` - React and Vite doctor portal
+- `onehealth-backend` - FastAPI and PostgreSQL API
 
-## React Compiler
+## Start the backend
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+From `onehealth-backend`, use the virtual environment's Python directly:
 
-## Expanding the ESLint configuration
+```powershell
+.\.venv\Scripts\python.exe -m uvicorn app.main:app --reload --port 8001
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+This command works even when the virtual environment is not activated.
+
+Alternatively, activate it first:
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+python -m uvicorn app.main:app --reload --port 8001
+```
+
+Backend URLs:
+
+- API documentation: `http://localhost:8001/docs`
+- Health check: `http://localhost:8001/health`
+
+## Start the frontend
+
+From `frontend` in a second terminal:
+
+```powershell
+cd frontend
+npm run dev
+```
+
+Open `http://localhost:5173`.
+
+Development login:
+
+- Email: `sarah.carter@onehealth.com`
+- OTP: `123456`
+
+## Integration
+
+The frontend now uses the backend for OTP authentication, JWT sessions, doctor
+profile, photo uploads, appointments, availability schedules, conversation history,
+REST chat fallback, and WebSocket chat.
+
+The default API URL is `http://localhost:8001`. Override it with `VITE_API_URL`.

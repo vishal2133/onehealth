@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export default function CalendarView({ appointmentsData, availabilityData, onUpdateAvailability }) {
-  // We'll focus on May 2026 since current date is May 2026
-  const [currentDate, setCurrentDate] = useState(new Date(2026, 4, 1)); // May 1, 2026
-  const [selectedDateKey, setSelectedDateKey] = useState('2026-05-23'); // Default selected is today
+  const today = new Date();
+  const todayKey = today.toISOString().slice(0, 10);
+  const [currentDate, setCurrentDate] = useState(new Date(today.getFullYear(), today.getMonth(), 1));
+  const [selectedDateKey, setSelectedDateKey] = useState(todayKey);
 
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
@@ -131,7 +132,7 @@ export default function CalendarView({ appointmentsData, availabilityData, onUpd
           {calendarCells.map((cell, idx) => {
             const dateKey = formatDateKey(cell.year, cell.month, cell.day);
             const isSelected = dateKey === selectedDateKey;
-            const isToday = dateKey === '2026-05-23';
+            const isToday = dateKey === todayKey;
             
             // Get appointments count/categories for indicator dots
             const dayAppts = appointmentsData.filter(appt => appt.date === dateKey);
